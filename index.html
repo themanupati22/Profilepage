@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio Website</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    html, body {
+      height: 100%;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e3e7ee 100%);
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #2c3e50;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .container {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      width: 340px;
+      max-width: 90vw;
+      padding: 18px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 8px 24px rgba(0, 0, 0, 0.08);
+      box-sizing: border-box;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeInUp 0.8s ease-out;
+    }
+    
+    .container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 0 12px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    /* Hide all views initially */
+    .view {
+      display: none;
+    }
+    .active-view {
+      display: block;
+    }
+    /* Front page styles */
+    .profile-img {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      border: 4px solid #ffffff;
+      margin-bottom: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+      transition: transform 0.3s ease;
+      object-fit: cover;
+    }
+    
+    .profile-img:hover {
+      transform: scale(1.05);
+    }
+    h2 {
+      font-size: 32px;
+      font-weight: 600;
+      margin: 10px 0 15px;
+      color: #2c3e50;
+      letter-spacing: -0.5px;
+    }
+    h6 {
+      margin: 0 0 20px;
+      font-size: 13px;
+      color: #7f8c8d;
+      font-weight: 400;
+    }
+    
+    .title {
+      font-size: 20px;
+      font-weight: 600;
+      background: linear-gradient(90deg, #ff1493 0%, #00bfff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 5px 0 20px;
+      letter-spacing: 0.5px;
+    }
+    
+    .greeting {
+      font-size: 18px;
+      color: #6b7280;
+      margin: 10px 0 5px;
+      font-weight: 400;
+    }
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #5a6c7d;
+      margin-bottom: 20px;
+      font-weight: 400;
+    }
+    
+    .contact-icons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 15px 0 10px;
+      flex-wrap: wrap;
+    }
+    
+    .contact-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 45px;
+      height: 45px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 50%;
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+    
+    .contact-icon:hover {
+      transform: translateY(-3px) scale(1.1);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+    
+    .contact-icon.github {
+      background: linear-gradient(135deg, #333 0%, #555 100%);
+      box-shadow: 0 4px 15px rgba(51, 51, 51, 0.3);
+    }
+    
+    .contact-icon.linkedin {
+      background: linear-gradient(135deg, #0077b5 0%, #00a0dc 100%);
+      box-shadow: 0 4px 15px rgba(0, 119, 181, 0.3);
+    }
+    
+    .contact-icon.email {
+      background: linear-gradient(135deg, #ea4335 0%, #fbbc05 100%);
+      box-shadow: 0 4px 15px rgba(234, 67, 53, 0.3);
+    }
+    
+    .contact-icon.instagram {
+      background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);
+      box-shadow: 0 4px 15px rgba(131, 58, 180, 0.3);
+    }
+    /* Buttons */
+    button, a.button {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      padding: 14px 32px;
+      border-radius: 12px;
+      border: 2px solid transparent;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      margin: 8px 0;
+      width: 100%;
+      box-sizing: border-box;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    button:hover, a.button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+    
+    button:active, a.button:active {
+      transform: translateY(0);
+    }
+    
+    #projectsBtn {
+      background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+      box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3);
+    }
+    
+    #projectsBtn:hover {
+      box-shadow: 0 8px 25px rgba(44, 62, 80, 0.4);
+    }
+    
+    #backBtn {
+      background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+      box-shadow: 0 4px 15px rgba(149, 165, 166, 0.3);
+    }
+    
+    #backBtn:hover {
+      box-shadow: 0 8px 25px rgba(149, 165, 166, 0.4);
+    }
+    
+    /* Mobile Responsive Styles */
+    @media screen and (max-width: 768px) {
+      body {
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .container {
+        width: 100%;
+        max-width: none;
+        padding: 35px 25px;
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      
+      .profile-img {
+        width: 320px;
+        height: 320px;
+        margin-bottom: 20px;
+        align-self: center;
+      }
+      
+      .greeting {
+        font-size: 32px;
+        margin: 0 0 10px;
+        text-align: center;
+      }
+      
+      h2 {
+        font-size: 44px;
+        margin: 0 0 15px;
+        letter-spacing: -0.5px;
+        text-align: center;
+      }
+      
+      .title {
+        font-size: 32px;
+        margin: 0 0 25px;
+        letter-spacing: 0.2px;
+        text-align: center;
+      }
+      
+      p {
+        font-size: 28px;
+        line-height: 1.4;
+        margin: 0 0 40px;
+        text-align: center;
+        padding: 0 15px;
+        font-weight: 500;
+      }
+      
+      .contact-icons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 60px;
+        margin: 0;
+        padding: 40px 0;
+        flex-wrap: nowrap;
+      }
+      
+      .contact-icon {
+        width: 150px;
+        height: 150px;
+        font-size: 60px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+        border-radius: 50%;
+      }
+      
+      .contact-icon:hover {
+        transform: translateY(-8px) scale(1.15);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+      }
+    }
+    
+    /* Extra Small Mobile Devices */
+    @media screen and (max-width: 480px) {
+      .container {
+        padding: 35px 25px;
+      }
+      
+      .profile-img {
+        width: 280px;
+        height: 280px;
+      }
+      
+      .greeting {
+        font-size: 28px;
+      }
+      
+      h2 {
+        font-size: 40px;
+      }
+      
+      .title {
+        font-size: 28px;
+      }
+      
+      p {
+        font-size: 26px;
+        padding: 0 10px;
+        font-weight: 500;
+      }
+      
+      .contact-icons {
+        gap: 50px;
+        padding: 35px 0;
+      }
+      
+      .contact-icon {
+        width: 130px;
+        height: 130px;
+        font-size: 55px;
+      }
+      
+      p {
+        font-size: 14px;
+      }
+      
+      .contact-icons {
+        gap: 12px;
+      }
+      
+      .contact-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Front Page view -->
+    <div id="home-view" class="view active-view">
+      <img src="Best 2025.jpg" alt="Profile Picture" class="profile-img" />
+      <div class="greeting">Hi, I'm</div>
+      <h2>Kiran Manupati</h2>
+      <div class="title">Full Stack Developer</div>
+      
+      <p>A passionate Computer Science student driven by challenges that shape my skills and ideas that fuel innovation and growth.</p>
+      
+      <!-- Contact Icons -->
+      <div class="contact-icons">
+        <a href="https://github.com/themanupati22" target="_blank" class="contact-icon github" title="GitHub">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/themanupati22/" target="_blank" class="contact-icon linkedin" title="LinkedIn">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a href="https://www.instagram.com/themanupati22/" target="_blank" class="contact-icon instagram" title="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="mailto:kiranmanupati7557@gmail.com" class="contact-icon email" title="Email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
